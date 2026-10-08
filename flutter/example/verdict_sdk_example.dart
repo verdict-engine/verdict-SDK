@@ -1,4 +1,4 @@
-import 'package:verdict_sdk/verdict.dart';
+import 'package:verdict_sdk/verdict_sdk.dart';
 
 /// Minimal end-to-end example: score a card authorization and act on the verdict.
 Future<void> main() async {

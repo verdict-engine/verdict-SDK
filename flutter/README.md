@@ -12,7 +12,7 @@ dependencies:
 ```
 
 ```dart
-import 'package:verdict_sdk/verdict.dart';
+import 'package:verdict_sdk/verdict_sdk.dart';
 ```
 
 ## Quick start

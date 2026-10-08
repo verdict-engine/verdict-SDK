@@ -5,6 +5,8 @@
 - **Reason codes.** `Decision` now exposes `reasonCodes` (stable, merchant-facing `ReasonCode`s),
   `customerMessage` (a vague, customer-safe line), and `shadow` (whether the decision was
   non-enforcing). Older engines that omit these parse to empty / null / false.
+- **Breaking:** the library entrypoint is now `package:verdict_sdk/verdict_sdk.dart` (was
+  `verdict.dart`), matching the package name per pub.dev convention. Update your import.
 
 ## 0.1.0
 

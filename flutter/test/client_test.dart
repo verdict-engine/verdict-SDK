@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:test/test.dart';
-import 'package:verdict_sdk/verdict.dart';
+import 'package:verdict_sdk/verdict_sdk.dart';
 
 http.Response _json(Object body, {int status = 200, Map<String, String> headers = const {}}) {
   return http.Response(
