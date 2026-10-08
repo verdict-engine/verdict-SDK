@@ -1,0 +1,19 @@
+name: verdict_sdk
+description: Official Dart and Flutter client for the Verdict fraud and risk decisioning engine.
+version: 0.2.0
+repository: https://github.com/verdict-engine/verdict-engine
+topics:
+  - fraud
+  - risk
+  - security
+  - payments
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  http: ^1.2.0
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.24.0

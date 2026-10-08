@@ -1,0 +1,55 @@
+name: publish
+
+# Publishes a package when a GitHub release is published whose tag names the package and version,
+# e.g. `ts-v0.2.0` (npm) or `dart-v0.2.0` (pub.dev). Each job is gated on the tag prefix, so a
+# release only publishes the package it targets.
+#
+# Required configuration before first use:
+#   - npm:    repo secret NPM_TOKEN (an automation token with publish rights to @verdict/sdk)
+#   - pub.dev: configure OIDC automated publishing for verdict_sdk (pub.dev → Admin → Automated
+#              publishing → GitHub Actions), then this workflow's id-token permission is sufficient.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  npm:
+    if: startsWith(github.event.release.tag_name, 'ts-v')
+    name: Publish @verdict/sdk to npm
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run type-check
+      - run: npm test
+      - run: npm run build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  pub:
+    if: startsWith(github.event.release.tag_name, 'dart-v')
+    name: Publish verdict_sdk to pub.dev
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # pub.dev OIDC automated publishing
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - run: dart pub get
+      - run: dart analyze --fatal-infos
+      - run: dart test
+      - run: dart pub publish --force
